@@ -12,6 +12,7 @@ public class BasePage {
   public static String baseUrl = "https://www.mailtravel.co.uk/";
   public static WebDriver driver;
   public static String browserType = "chrome";
+  public static String searchIndiaHoliday = "India";
 
   public static void startBrowser(String browser){
     System.out.println("========i m in start browser");
@@ -20,7 +21,7 @@ public class BasePage {
         WebDriverManager.chromedriver().setup();
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--incognito");
-        driver = new ChromeDriver(chromeOptions);
+        driver = new ChromeDriver();
       }
 
       else if(browser.equalsIgnoreCase("firefox")){

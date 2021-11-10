@@ -23,17 +23,17 @@ public class StepDefinitions {
 
   @Then("I should navigate to Homepage")
   public void i_should_navigate_to_homepage() {
-    Assert.assertEquals("https://www.mailtravel.co.uk/",dailyMailTravel.isUserOnHomePage());
+    Assert.assertEquals("Home Page | Mail Travel",dailyMailTravel.isUserOnHomePage());
   }
 
   @When("I type {string} in then search box and click on search button")
   public void i_type_in_then_search_box_and_click_on_search_button(String string) {
-
+    dailyMailTravel.searchIndia(string);
   }
 
   @When("I click More Info on the first result")
   public void i_click_more_info_on_the_first_result() {
-
+    dailyMailTravel.clickMoreInfo();
   }
 
   @Then("I should see days,price and telephone number")
