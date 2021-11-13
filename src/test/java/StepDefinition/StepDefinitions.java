@@ -1,8 +1,10 @@
 package StepDefinition;
 
 
+import Mailtravel.Utility.Util;
 import Mailtravel.Webpages.BasePage;
 import Mailtravel.Webpages.DailyMailTravel;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -16,26 +18,44 @@ public class StepDefinitions {
     dailyMailTravel = new DailyMailTravel();
   }
 
-  @Given("I am on mailtravel page")
-  public void i_am_on_mailtravel_page() {
+  @Given("I am on phptravel admin page")
+  public void i_am_on_phptravel_admin_page() {
     dailyMailTravel.goToHomePage();
   }
 
-  @Then("I should navigate to Homepage")
-  public void i_should_navigate_to_homepage() {
-    Assert.assertEquals("Home Page | Mail Travel",dailyMailTravel.isUserOnHomePage());
+  @Then("I should navigate to admin page")
+  public void i_should_navigate_to_admin_page() {
+    Assert.assertEquals("Administator Login",dailyMailTravel.isUserOnHomePage());
   }
 
-  @When("I type {string} in then search box and click on search button")
-  public void i_type_in_then_search_box_and_click_on_search_button(String string) {
-    dailyMailTravel.searchIndia(string);
+
+  @When("I enter {string} and {string} and click on LogOn button")
+  public void I_EnterAndAndClickOnLogOnButton(String UserName, String Password) {
+    dailyMailTravel.enterEmailPassword(UserName, Password);
   }
 
-  @When("I click More Info on the first result")
-  public void i_click_more_info_on_the_first_result() {
-    dailyMailTravel.clickMoreInfo();
+  @Then("I should navigate to the Dashboard Page")
+  public void i_ShouldNavigateToTheDashboardPage() {
+    Assert.assertTrue(dailyMailTravel.isUserOnDashBoard());
   }
 
+  @When("I click on Hotels & Bookings to book Hotel")
+  public void IClickOnHotelsBookingsToBookHotel() {
+    dailyMailTravel.clickHotelandbooking();
+    Util.waitTime(100);
+  }
+
+  @And("I am on Add booking Page")
+  public void IamonAddBookingPage() {
+    dailyMailTravel.clickOnaddbooking();
+  }
+
+  @When("I select Hotels from Services")
+  public void iSelectHotelsFromServices() {
+    dailyMailTravel.selectHotelfromService();
+  }
+
+ /*
   @Then("I should see days,price and telephone number")
   public void i_should_see_days_price_and_telephone_number() {
 
@@ -46,6 +66,7 @@ public class StepDefinitions {
 
   }
 
+*/
 
 
 }

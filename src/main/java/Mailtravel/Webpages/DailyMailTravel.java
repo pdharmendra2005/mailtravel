@@ -12,34 +12,60 @@ public class DailyMailTravel extends BasePage {
 
 
   public DailyMailTravel(){
-    System.out.println("constructor"+driver);
+
     PageFactory.initElements(driver,this);
   }
 
 
-  @FindBy (css = "#searchtext_freetext_search_form")
-  WebElement searchText;
+  @FindBy ( css = "input[type='text']")
+  WebElement enterEmail;
 
-  @FindBy (css = "#freetext_search_form > form > button > div")
-  WebElement searchClick;
+  @FindBy (css = "input[name='password']")
+  WebElement enterPwd;
 
- // @FindBy ( css = "#iterator_1_product_custom_product-price-row > div > div > span ")
- // WebElement moreInfoClick;
 
- // @FindBy ( css = "button[id='iterator_1_product_custom_more-info-button']")
-  //WebElement moreInfoClick;
+  @FindBy ( css = "button[type='submit']")
+  WebElement clickLogon;
 
-  @FindBy ( xpath = "//*[text()='More info']")
-  WebElement moreInfoClick;
-  //button[@id='iterator_1_product_custom_more-info-button']
+  @FindBy ( xpath = "//*[text()='DASHBOARD']")
+  WebElement verifyDashboard;
 
-  /*public void goToHomePage(){
-    driver.get(baseUrl);
-  }
-*/
+  @FindBy ( xpath = "//*[text()='hotels ']")
+  WebElement clickHotel;
+
+  @FindBy ( xpath = "//a[@href='https://phptravels.net/api/admin/hotels/booking']")
+  WebElement clickBooking;
+
+  @FindBy ( css = "i.fa.fa-dashboard.fa-lg")
+  WebElement clickaddBooking;
+
+  @FindBy ( xpath = "//select[@id='servicetype']")
+  WebElement selectServiceType;
+
+  @FindBy ( xpath = "//option[@value='Hotels']")
+  WebElement selectServiceTypeHotel;
+
+  @FindBy ( css = "#selusertype")
+  WebElement selectCustomer;
+
+  @FindBy ( css = "#regcust")
+  WebElement selectGuest;
+
+  @FindBy ( css = "#lname")
+  WebElement enterFirstName;
+
+  @FindBy ( css = "#lname")
+  WebElement enterLastName;
+
+  @FindBy ( css = "#mobile")
+  WebElement enterMobileNumber;
+
+  @FindBy ( css = "#email")
+  WebElement enterEmailadd;
+
+
   public void goToHomePage() {
     System.out.println("I am inside homePage");
-    System.out.println("driver"+driver);
     driver.get(baseUrl);
 
   }
@@ -49,16 +75,39 @@ public class DailyMailTravel extends BasePage {
     return title;
   }
 
+  public void enterEmailPassword(String stringEmail, String Password ) {
+    Util.waitTime(100);
+    Util.sendKey(enterEmail, emailEnter);
+    Util.sendKey(enterPwd, passwrd);
+    Util.waitTime(100);
+    Util.click(clickLogon);
+    Util.waitTime(200);
+  }
 
-  public void searchIndia(String string) {
-    Util.sendKey(searchText, BasePage.searchIndiaHoliday);
-    Util.click(searchClick);
+  public boolean isUserOnDashBoard(){
+    return Util.isDisplayed(verifyDashboard);
 
   }
 
-  public void clickMoreInfo() {
-   // Util.click(driver.findElement(By.cssSelector("div[class='optanon-clearfix optanon-alert-box-bottom-padding']")));
-
-    Util.click(moreInfoClick);
+  public void clickHotelandbooking(){
+    Util.click(clickHotel);
+    Util.waitTime(200);
+    Util.click(clickBooking);
   }
+  public void clickOnaddbooking(){
+    Util.waitTime(100);
+    Util.click(clickaddBooking);
+  }
+  public void selectHotelfromService(){
+    Util.click(selectServiceType);
+    Util.waitTime(100);
+    Util.click(selectServiceTypeHotel);
+  }
+  public void customerDetails(String CusName, String Fname,String lName,int mobileNum,String Email){
+
+
+
+  }
+
+
 }
