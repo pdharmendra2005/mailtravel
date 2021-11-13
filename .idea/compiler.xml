@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="DMGMedia" />
+        <module name="mailtravel" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="DMGMedia" target="1.6" />
+      <module name="mailtravel" target="14" />
     </bytecodeTargetLevel>
   </component>
 </project>

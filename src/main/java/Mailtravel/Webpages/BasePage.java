@@ -9,15 +9,18 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class BasePage {
 
-  public static String baseUrl = "https://www.mailtravel.co.uk/";
+  public static String baseUrl = "https://phptravels.net/api/admin";
   public static WebDriver driver;
   public static String browserType = "chrome";
-  public static String searchIndiaHoliday = "India";
+  public static String emailEnter = "admin@phptravels.com";
+  public static String passwrd = "demoadmin";
+
+
 
   public static void startBrowser(String browser){
-    System.out.println("========i m in start browser");
+
       if(browser.equalsIgnoreCase("chrome")){
-        System.out.println("i m in start browser");
+
         WebDriverManager.chromedriver().setup();
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--incognito");
