@@ -10,9 +10,9 @@ public class Hooks extends BasePage {
   public void openBrowser(){
       startBrowser(browserType);
   }
- @After
+ /*@After
   public void quitBrowser(){
       exit();
   }
-
+*/
 }
