@@ -23,7 +23,7 @@ public class Util extends BasePage {
   }
 
   public static void click(WebElement element){
-    waitTime(10);
+    waitTime(100);
     element.isEnabled();
     element.click();
   }

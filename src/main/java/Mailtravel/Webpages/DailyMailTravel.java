@@ -5,14 +5,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class DailyMailTravel extends BasePage {
 
 
   public DailyMailTravel(){
-
+    driverWait = new WebDriverWait(driver, 20);
     PageFactory.initElements(driver,this);
   }
 
@@ -39,7 +41,7 @@ public class DailyMailTravel extends BasePage {
   @FindBy ( css = "i.fa.fa-dashboard.fa-lg")
   WebElement clickaddBooking;
 
-  @FindBy ( xpath = "//select[@id='servicetype']")
+  @FindBy ( css = "#servicetype")
   WebElement selectServiceType;
 
   @FindBy ( xpath = "//option[@value='Hotels']")
@@ -48,10 +50,10 @@ public class DailyMailTravel extends BasePage {
   @FindBy ( css = "#selusertype")
   WebElement selectCustomer;
 
-  @FindBy ( css = "#regcust")
+  @FindBy ( css = "option[value='guest']")
   WebElement selectGuest;
 
-  @FindBy ( css = "#lname")
+  @FindBy ( css = "#fname")
   WebElement enterFirstName;
 
   @FindBy ( css = "#lname")
@@ -62,6 +64,26 @@ public class DailyMailTravel extends BasePage {
 
   @FindBy ( css = "#email")
   WebElement enterEmailadd;
+
+  @FindBy ( css = "input#Hotels")
+  WebElement enterCheckIndate;
+
+  @FindBy ( css = "input.form-control.dpd2")
+  WebElement enterCheckOutDate;
+
+  @FindBy ( css = "#s2id_autogen3")
+  WebElement chooseHotelName;
+
+  @FindBy ( xpath = "//div[contains(text(),' Rendezvous Hotels ')]")
+  WebElement selectHotelName;
+
+  @FindBy ( xpath = "//span[contains(text(),'Select Room')]")
+  WebElement chooseRoomName;
+
+  @FindBy ( xpath = "//div[contains(text(),'Delux Room')]")
+  WebElement selectRoomName;
+
+
 
 
   public void goToHomePage() {
@@ -76,10 +98,11 @@ public class DailyMailTravel extends BasePage {
   }
 
   public void enterEmailPassword(String stringEmail, String Password ) {
-    Util.waitTime(100);
+   // Util.waitTime(600);
+    driverWait.until(ExpectedConditions.visibilityOf(enterEmail));
     Util.sendKey(enterEmail, emailEnter);
     Util.sendKey(enterPwd, passwrd);
-    Util.waitTime(100);
+    Util.waitTime(300);
     Util.click(clickLogon);
     Util.waitTime(200);
   }
@@ -100,14 +123,41 @@ public class DailyMailTravel extends BasePage {
   }
   public void selectHotelfromService(){
     Util.click(selectServiceType);
-    Util.waitTime(100);
+    Util.waitTime(400);
     Util.click(selectServiceTypeHotel);
   }
-  public void customerDetails(String CusName, String Fname,String lName,int mobileNum,String Email){
 
 
+
+  public void enterCustomerDetails(String CusName, String Fname,String lName,String mobileNum,String Email) {
+    Util.waitTime(400);
+    driverWait.until(ExpectedConditions.visibilityOf(selectCustomer));
+    Util.sendKey( selectCustomer , CusName);
+
+    Util.click(selectGuest);
+    driverWait.until(ExpectedConditions.visibilityOf(selectGuest));
+    Util.waitTime(100);
+    Util.sendKey( enterFirstName , Fname);
+    Util.waitTime(100);
+    Util.sendKey( enterLastName,   lName);
+    Util.waitTime(100);
+    Util.sendKey( enterMobileNumber  , mobileNum);
+    Util.waitTime(100);
+    Util.sendKey(  enterEmailadd , Email);
+  }
+  public void  enterItemDetails( String checkIn, String checkOut, String roomQty){
+    driverWait.until(ExpectedConditions.visibilityOf(enterCheckIndate));
+    Util.sendKey(enterCheckIndate, checkIn);
+    Util.sendKey(enterCheckOutDate, checkOut);
+    driverWait.until(ExpectedConditions.visibilityOf(chooseHotelName));
+    Util.click(chooseHotelName);
+    Util.waitTime(200);
+    Util.click(selectHotelName);
+    driverWait.until(ExpectedConditions.visibilityOfAllElements(selectRoomName,selectRoomName));
+    Util.click(chooseRoomName);
+
+    Util.click(selectRoomName);
 
   }
-
 
 }
