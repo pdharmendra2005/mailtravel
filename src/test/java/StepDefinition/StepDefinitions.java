@@ -31,6 +31,7 @@ public class StepDefinitions {
 
   @When("I enter {string} and {string} and click on LogOn button")
   public void I_EnterAndAndClickOnLogOnButton(String UserName, String Password) {
+    Util.waitTime(200);
     dailyMailTravel.enterEmailPassword(UserName, Password);
   }
 
@@ -55,18 +56,16 @@ public class StepDefinitions {
     dailyMailTravel.selectHotelfromService();
   }
 
- /*
-  @Then("I should see days,price and telephone number")
-  public void i_should_see_days_price_and_telephone_number() {
+  @And("I enter Customer as {string}, {string}, {string}, {string},{string} and enter next item")
+  public void IEnterCustomerAsAndEnterNextItem(String guest, String firstName, String lName, String mobile, String email) {
+    dailyMailTravel.enterCustomerDetails(guest, firstName,lName,mobile,email);
 
   }
 
-  @When("I click on Book Online")
-  public void i_click_on_book_online() {
+
+  @And("I enter ITEM detail {string},{string},{string} enter next item")
+  public void IEnterITEMDetailEnterNextItem(String checkIn, String checkOut, String roomQty) {
+    dailyMailTravel.enterItemDetails(checkIn, checkOut, roomQty);
 
   }
-
-*/
-
-
 }

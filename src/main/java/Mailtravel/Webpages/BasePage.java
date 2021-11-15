@@ -6,11 +6,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
 
   public static String baseUrl = "https://phptravels.net/api/admin";
   public static WebDriver driver;
+  public static WebDriverWait driverWait;
   public static String browserType = "chrome";
   public static String emailEnter = "admin@phptravels.com";
   public static String passwrd = "demoadmin";
