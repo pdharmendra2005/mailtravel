@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="0" failures="0" name="TestRunner" time="0" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="TestRunner" time="21.759" errors="1" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="14.0.1+7"/>
@@ -60,4 +60,33 @@
     <property name="sun.stdout.encoding" value="cp850"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
+  <testcase classname="Verify the Grand Total" name="As a user ,When I&apos;m booking for holiday &amp; booking details." time="21.759">
+    <error type="java.lang.NumberFormatException:">java.lang.NumberFormatException: null
+	at java.base/java.lang.Integer.parseInt(Integer.java:614)
+	at java.base/java.lang.Integer.parseInt(Integer.java:770)
+	at Mailtravel.Webpages.DailyMailTravel.grandTotalActual(DailyMailTravel.java:293)
+	at StepDefinition.StepDefinitions.iShouldGetAsPerMySelection(StepDefinitions.java:76)
+	at ✽.I should get GRANDTOTAL as per my selection(file:///C:/DP-%202020/mailtravel/src/test/feature/Mailtravel.feature:16)
+</error>
+    <system-out>I am inside homePage
+Title Administator Login
+day16
+month11
+year2021
+size8
+size8
+====grandTotalValue output16
+I am finish
+</system-out>
+    <system-err>SLF4J: Failed to load class &quot;org.slf4j.impl.StaticLoggerBinder&quot;.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Starting ChromeDriver 95.0.4638.69 (6a1600ed572fedecd573b6c2b90a22fe6392a410-refs/branch-heads/4638@{#984}) on port 38447
+Only local connections are allowed.
+Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
+ChromeDriver was started successfully.
+Nov 16, 2021 4:00:33 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: W3C
+</system-err>
+  </testcase>
 </testsuite>

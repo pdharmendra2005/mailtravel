@@ -1,4 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: TestRunner
 -------------------------------------------------------------------------------
-Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.439 sec
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 24.208 sec <<< FAILURE!
+As a user ,When I'm booking for holiday & booking details.(Verify the Grand Total)  Time elapsed: 21.759 sec  <<< ERROR!
+java.lang.NumberFormatException: null
+	at java.base/java.lang.Integer.parseInt(Integer.java:614)
+	at java.base/java.lang.Integer.parseInt(Integer.java:770)
+	at Mailtravel.Webpages.DailyMailTravel.grandTotalActual(DailyMailTravel.java:293)
+	at StepDefinition.StepDefinitions.iShouldGetAsPerMySelection(StepDefinitions.java:76)
+	at ?.I should get GRANDTOTAL as per my selection(file:///C:/DP-%202020/mailtravel/src/test/feature/Mailtravel.feature:16)
+
