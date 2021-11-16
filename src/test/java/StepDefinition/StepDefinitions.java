@@ -66,9 +66,15 @@ public class StepDefinitions {
 
 
   @And("I enter ITEM detail {string},{string},{string} enter next item")
-  public void IEnterITEMDetailEnterNextItem(String checkIn, String checkOut, String roomQty) throws InterruptedException, ParseException {
-    dailyMailTravel.selectDate(checkIn, checkOut);
+  public void IEnterITEMDetailEnterNextItem(String checkIn, String checkOut, String roomQty) throws ParseException, InterruptedException {
     dailyMailTravel.enterItemDetails(checkIn, checkOut, roomQty);
+
+  }
+
+  @Then("I should get GRANDTOTAL as per my selection")
+  public void iShouldGetAsPerMySelection() {
+    Assert.assertEquals(dailyMailTravel.grandTotalasPerSelection(),dailyMailTravel.grandTotalActual());
+    Util.waitTime(1000);
 
   }
 }

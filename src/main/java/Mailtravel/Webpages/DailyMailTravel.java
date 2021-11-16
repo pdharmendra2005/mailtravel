@@ -94,9 +94,23 @@ public class DailyMailTravel extends BasePage {
   @FindBy ( xpath = "//div[contains(text(),'Delux Room')]")
   WebElement selectRoomName;
 
-  @FindBy ( css = "select.form-control.roomquantity")
-  WebElement selectRoomQty;
+  @FindBy ( css = "#stay")
+  WebElement totalNights;
 
+  @FindBy ( css = "#totalroomprice")
+  WebElement totalRoomPrice;
+
+  @FindBy ( css = "#roomtotal")
+  WebElement perNightPrice;
+
+  @FindBy ( css = "#taxhotel")
+  WebElement taxVatValue;
+
+  @FindBy ( css = "#b2c_markup")
+  WebElement b2cMarkup;
+
+  @FindBy ( css = "#grandtotal")
+  WebElement grandTotalActual;
 
   public void goToHomePage() {
     System.out.println("I am inside homePage");
@@ -163,25 +177,26 @@ public class DailyMailTravel extends BasePage {
 
 
   public void enterCustomerDetails(String CusName, String Fname,String lName,String mobileNum,String Email) {
-    Util.waitTime(500);
+    Util.waitTime(800);
     driverWait.until(ExpectedConditions.visibilityOf(selectCustomer));
-    Util.click( selectCustomer);
+    Util.waitTime(800);
+    Util.sendKey( selectCustomer , CusName);
     Util.waitTime(400);
     Util.click(selectGuest);
-   // driverWait.until(ExpectedConditions.visibilityOf(selectGuest));
+
+    driverWait.until(ExpectedConditions.visibilityOf(selectGuest));
     Util.waitTime(300);
     Util.sendKey( enterFirstName , Fname);
-    Util.waitTime(100);
+    Util.waitTime(300);
     Util.sendKey( enterLastName,   lName);
-    Util.waitTime(100);
+    Util.waitTime(300);
     Util.sendKey( enterMobileNumber  , mobileNum);
-    Util.waitTime(100);
+    Util.waitTime(200);
     Util.sendKey(  enterEmailadd , Email);
   }
   public void  enterItemDetails( String checkIn, String checkOut, String roomQty) throws ParseException, InterruptedException {
 
 
-    StringBuilder reversedWords = new StringBuilder();
 
     // split input string by " " space to get each word as String[]
     String[] dt = checkIn.split("/");
@@ -192,7 +207,7 @@ public class DailyMailTravel extends BasePage {
     System.out.println("year" + dt[2]);
 
     //Click and open the Date Picker
-    //driverWait.until(ExpectedConditions.visibilityOf(enterCheckIndate));
+    driverWait.until(ExpectedConditions.visibilityOf(enterCheckIndate));
     Util.sendKey(enterCheckIndate, checkIn);
 
     JavascriptExecutor je = (JavascriptExecutor) driver;
@@ -221,9 +236,6 @@ public class DailyMailTravel extends BasePage {
     Util.sendKey(enterCheckOutDate, checkOut);
     String[] dt2 = checkOut.split("/");
     // loop over the array from back
-    System.out.println("===day" + dt2[0]);
-    System.out.println("===month" + dt2[1]);
-    System.out.println("===year" + dt2[2]);
 
     WebElement dateWidget2 = driver.findElement(By.className("datepicker-days"));
     List<WebElement> columns2 = dateWidget2.findElements(By.tagName("tr"));
@@ -240,20 +252,48 @@ public class DailyMailTravel extends BasePage {
       }
     }
 
+
+
+    driver.findElement(By.xpath("//html")).click();
+
     Util.isDisplayed(chooseHotelName);
     Util.click(chooseHotelName);
     Util.waitTime(200);
     Util.click(selectHotelName);
-    driverWait.until(ExpectedConditions.visibilityOfAllElements(selectRoomName, selectRoomName));
+    // driverWait.until(ExpectedConditions.visibilityOfAllElements(selectRoomName, selectRoomName));
     Util.click(chooseRoomName);
 
     Util.click(selectRoomName);
-    Util.click(selectRoomQty);
-
 
 
 
   }
 
 
+  public int grandTotalasPerSelection() throws NumberFormatException{
+    Util.waitTime(200);
+
+    int totalNight = Integer.parseInt(totalNights.getAttribute("value"));
+
+    int perNight = Integer.parseInt(perNightPrice.getAttribute("value"));
+
+   /* int taxVat = Integer.parseInt(taxVatValue.getText());
+    int b2cMarkupValue = Integer.parseInt(b2cMarkup.getText());
+*/
+    Util.waitTime(400);
+    int taxVatValue = ((((totalNight*perNight)*2)/100)+ ( totalNight+perNight));
+    Util.waitTime(400);
+    int b2cmarkUpPercent = ( ( ( totalNight+perNight)*10)/100) ;
+
+    int grandTotalValue = taxVatValue + b2cmarkUpPercent ;
+    System.out.println("====grandTotalValue output"+grandTotalValue);
+    return grandTotalValue;
+  }
+
+  public int grandTotalActual(){
+    Util.waitTime(400);
+    int grandTotalActualValue = Integer.parseInt(grandTotalActual.getAttribute("value"));
+    System.out.println("Actual grand total value"+grandTotalActualValue);
+    return grandTotalActualValue;
+  }
 }
