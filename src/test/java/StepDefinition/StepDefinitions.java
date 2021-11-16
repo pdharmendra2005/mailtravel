@@ -10,6 +10,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 
+import java.text.ParseException;
+
 public class StepDefinitions {
 
   DailyMailTravel dailyMailTravel;
@@ -64,7 +66,8 @@ public class StepDefinitions {
 
 
   @And("I enter ITEM detail {string},{string},{string} enter next item")
-  public void IEnterITEMDetailEnterNextItem(String checkIn, String checkOut, String roomQty) {
+  public void IEnterITEMDetailEnterNextItem(String checkIn, String checkOut, String roomQty) throws InterruptedException, ParseException {
+    dailyMailTravel.selectDate(checkIn, checkOut);
     dailyMailTravel.enterItemDetails(checkIn, checkOut, roomQty);
 
   }
