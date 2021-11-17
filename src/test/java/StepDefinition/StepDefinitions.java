@@ -73,8 +73,8 @@ public class StepDefinitions {
 
   @Then("I should get GRANDTOTAL as per my selection")
   public void iShouldGetAsPerMySelection() {
-    Assert.assertEquals(dailyMailTravel.grandTotalasPerSelection(),dailyMailTravel.grandTotalActual());
+    dailyMailTravel.grandTotalActual();
     Util.waitTime(1000);
-
+    Assert.assertEquals(dailyMailTravel.grandTotalasPerSelection(),dailyMailTravel.grandTotalActual());
   }
 }
