@@ -10,10 +10,12 @@ public class Hooks extends BasePage {
   public void openBrowser(){
       startBrowser(browserType);
   }
+/*
  @After
   public void quitBrowser(){
-     // driver.close();
-   System.out.println("I am finish");
+    driver.close();
+
   }
+*/
 
 }
