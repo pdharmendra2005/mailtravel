@@ -10,12 +10,11 @@ public class Hooks extends BasePage {
   public void openBrowser(){
       startBrowser(browserType);
   }
-/*
  @After
-  public void quitBrowser(){
+  public void quitBrowser() throws InterruptedException {
+    Thread.sleep(500);
     driver.close();
 
   }
-*/
 
 }
