@@ -1,16 +1,16 @@
 package Mailtravel.Webpages;
 
 import Mailtravel.Utility.Util;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.text.DateFormat;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 
@@ -94,7 +94,7 @@ public class DailyMailTravel extends BasePage {
   @FindBy(css = "#stay")
   WebElement totalNights;
 
-  @FindBy(css = "input[name='totalroomprice']")
+  @FindBy(css = "#totalroomprice")
   WebElement totalRoomPrice;
 
   @FindBy(css = "input[name='perNight']")
@@ -106,7 +106,7 @@ public class DailyMailTravel extends BasePage {
   @FindBy(css = "#b2c_markup")
   WebElement b2cMarkup;
 
-  @FindBy(css = "#grandtotal")
+  @FindBy(xpath = "//*[@id=\"grandtotal\"]")
   WebElement grandTotalActual;
 
   public void goToHomePage() {
@@ -180,13 +180,13 @@ public class DailyMailTravel extends BasePage {
     driverWait.until(ExpectedConditions.visibilityOf(selectCustomer));
     Util.waitTime(800);
     Util.sendKey(selectCustomer, CusName);
-    Util.waitTime(400);
+    Util.waitTime(800);
     Util.click(selectGuest);
-
+    Util.waitTime(500);
     driverWait.until(ExpectedConditions.visibilityOf(selectGuest));
-    Util.waitTime(300);
+    Util.waitTime(500);
     Util.sendKey(enterFirstName, Fname);
-    Util.waitTime(300);
+    Util.waitTime(500);
     Util.sendKey(enterLastName, lName);
     Util.waitTime(300);
     Util.sendKey(enterMobileNumber, mobileNum);
@@ -197,12 +197,9 @@ public class DailyMailTravel extends BasePage {
   public void enterItemDetails(String checkIn, String checkOut, String roomQty) throws ParseException, InterruptedException {
 
 
-    // split input string by " " space to get each word as String[]
     String[] dt = checkIn.split("/");
-    // loop over the array from back
     String checkinDay = dt[0];
 
-    //Click and open the Date Picker
     driverWait.until(ExpectedConditions.visibilityOf(enterCheckIndate));
     Util.sendKey(enterCheckIndate, checkIn);
 
@@ -217,10 +214,7 @@ public class DailyMailTravel extends BasePage {
     List<WebElement> columns = dateWidget.findElements(By.tagName("tr"));
 
     for (WebElement cell : columns) {
-      //Select 13th Date
       if (cell.getText().equals(checkinDay)) {
-        System.out.println("===checkinday" + cell.getText());
-        //System.out.println("cell"+cell.findElement(By.linkText(checkinDay)));
         cell.findElement(By.linkText(checkinDay)).click();
         break;
       }
@@ -228,16 +222,12 @@ public class DailyMailTravel extends BasePage {
 
     Util.sendKey(enterCheckOutDate, checkOut);
     String[] dt2 = checkOut.split("/");
-    // loop over the array from back
-
     WebElement dateWidget2 = driver.findElement(By.className("datepicker-days"));
     List<WebElement> columns2 = dateWidget2.findElements(By.tagName("tr"));
 
 
     for (WebElement cell : columns2) {
-      //Select 13th Date
       if (cell.getText().equals(dt2[0])) {
-        System.out.println("===02" + cell.getText());
         cell.findElement(By.linkText(dt2[0])).click();
         break;
       }
@@ -250,7 +240,6 @@ public class DailyMailTravel extends BasePage {
     Util.click(chooseHotelName);
     Util.waitTime(200);
     Util.click(selectHotelName);
-    // driverWait.until(ExpectedConditions.visibilityOfAllElements(selectRoomName, selectRoomName));
     Util.click(chooseRoomName);
 
     Util.click(selectRoomName);
@@ -259,45 +248,31 @@ public class DailyMailTravel extends BasePage {
   }
 
 
-  public int grandTotalasPerSelection() throws NumberFormatException {
-    Util.waitTime(200);
-/*
+  public BigDecimal grandTotalasPerSelection() throws NumberFormatException, InterruptedException {
 
+    Thread.sleep(5000);
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+    js.executeScript("window.scrollBy(0,200)");
     int totalNight = Integer.parseInt(totalNights.getAttribute("value"));
-    System.out.println("====total night"+ totalNight );
-
-    Util.waitTime(500);
-    int perNight = Integer.parseInt(perNightPrice.getAttribute("value"));
-    System.out.println("====perNight"+perNight);
-    Util.waitTime(500);
+    int perNight = Integer.parseInt((perNightPrice.getAttribute("value")));
+    int totalpricebeforeTax = totalNight*perNight;
     int taxVat = Integer.parseInt(taxVatValue.getAttribute("value"));
-    System.out.println("=====taxVat"+taxVat);
-    Util.waitTime(500);
     int b2cMarkupValue = Integer.parseInt(b2cMarkup.getAttribute("value"));
-    System.out.println("===b2cMarkupValue"+b2cMarkupValue);
-*/
 
-    Util.waitTime(500);
-    int totalRoomPriceval = Integer.parseInt(totalRoomPrice.getText());
-    System.out.println("----g--totalroompricevalu"+totalRoomPriceval);
-/*
-    Util.waitTime(400);   totalRoomPrice
-    int taxVatValue = ((((totalNight*perNight)*2)/100)+ ( totalNight+perNight));
-    Util.waitTime(400);
-    int b2cmarkUpPercent = ( ( ( totalNight+perNight)*10)/100) ;
+    BigDecimal taxVatValue = BigDecimal.valueOf(totalpricebeforeTax*taxVat/100.0);
+    BigDecimal b2cmarkUpPercent = BigDecimal.valueOf(totalpricebeforeTax*b2cMarkupValue/100.0);
+    BigDecimal grandTotalValue = taxVatValue.add(b2cmarkUpPercent).add(BigDecimal.valueOf(totalpricebeforeTax)) ;
 
-    int grandTotalValue = taxVatValue + b2cmarkUpPercent ;
-    System.out.println("====grandTotalValue output"+grandTotalValue);
     return grandTotalValue;
-   */
-    return totalRoomPriceval;
   }
 
 
-  public int grandTotalActual(){
-    Util.waitTime(400);
-    int grandTotalActualValue = Integer.parseInt(grandTotalActual.getAttribute("value"));
-    System.out.println("Actual grand total value"+grandTotalActualValue);
+  public BigDecimal grandTotalActual() throws InterruptedException {
+    Thread.sleep(5000);
+    Double d = new Double(grandTotalActual.getText().replace("$", ""));
+
+    BigDecimal b = BigDecimal.valueOf(d);
+    BigDecimal grandTotalActualValue = BigDecimal.valueOf(d);
     return grandTotalActualValue;
   }
 }

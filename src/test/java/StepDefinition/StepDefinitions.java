@@ -10,6 +10,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 
 public class StepDefinitions {
@@ -72,9 +73,10 @@ public class StepDefinitions {
   }
 
   @Then("I should get GRANDTOTAL as per my selection")
-  public void iShouldGetAsPerMySelection() {
-    dailyMailTravel.grandTotalActual();
-    Util.waitTime(1000);
-    Assert.assertEquals(dailyMailTravel.grandTotalasPerSelection(),dailyMailTravel.grandTotalActual());
+  public void iShouldGetAsPerMySelection() throws InterruptedException {
+    BigDecimal grandTotalPreSelection=dailyMailTravel.grandTotalasPerSelection();
+    BigDecimal granTotalActual=dailyMailTravel.grandTotalActual();
+
+    Assert.assertEquals(grandTotalPreSelection,granTotalActual);
   }
 }
