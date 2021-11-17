@@ -178,7 +178,7 @@ public class DailyMailTravel extends BasePage {
   public void enterCustomerDetails(String CusName, String Fname, String lName, String mobileNum, String Email) {
     Util.waitTime(800);
     driverWait.until(ExpectedConditions.visibilityOf(selectCustomer));
-    Util.waitTime(800);
+    Util.waitTime(900);
     Util.sendKey(selectCustomer, CusName);
     Util.waitTime(800);
     Util.click(selectGuest);
